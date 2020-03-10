@@ -1,0 +1,26 @@
+{
+  "name": "liri-bot",
+  "version": "1.0.0",
+  "description": "Command line node app that interprets the parameters it receives and responds with appropriate data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kellikells/LIRI-Bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kellikells/LIRI-Bot/issues"
+  },
+  "homepage": "https://github.com/kellikells/LIRI-Bot#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "fs": "0.0.1-security",
+    "moment": "^2.24.0",
+    "node-spotify-api": "^1.1.1"
+  }
+}
