@@ -105,7 +105,7 @@ function doWhatItSays() {
             getSpotify();
         } else if (searchMethod === 'movie-this') {
             getOmdb();
-        } { console.log(`invalid choice`) }
+        } { console.log(`no more text in file`) }
     });
 };
 
