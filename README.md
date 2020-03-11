@@ -16,3 +16,8 @@ Command line node app that interprets the parameters it receives and responds wi
 - omdb api
 - *switch statement*
 
+=============================================================
+### Screenshots of the app's functions:
+![concert-this](/README/concert-this.jpg)
+![concert-this-result](/README/concert-this-result.jpg)
+![spotify-this-song](/README/spotify-this-song.jpg)
