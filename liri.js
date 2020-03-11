@@ -49,7 +49,6 @@ switch (searchMethod) {
     default: console.log('invalid choice');
 }
 
-
 // ========== FUNCTIONS: switch statement cases ==========
 
 function getBandsInTown() {
@@ -68,36 +67,15 @@ function getBandsInTown() {
 }
 
 function getSpotify() {
-
-    // default search to "The Sign" 
-    if (!userInput) {
-        spotify.search({ type: 'track', query: 'The Sign', limit: 5 }, function (err, data) {
-            if (err) {
-                return console.log('Error occurred: ' + err);
-            }
-            console.log(JSON.stringify(data, null, 2));
-
-        });
+    if (!userInput) {         //  No userInput, default search "The Sign"
+        userInput = 'The Sign';
     }
+    spotify.search({ type: 'track', query: userInput },
+        function (err, data) {
+            if (err) {
+                return console.log(`Error occurred: ${err}`);
+            }
+            {console.log(`Artist: ${data.tracks.items[0].artists[0].name} || Song: ${data.tracks.items[0].name} || Album: ${data.tracks.items[0].album.name} || URL: ${data.tracks.items[0].external_urls.spotify}`);
+            }
+        });
 }
-
-
-
-        // spotify
-        //     .search({ type: 'track', query: 'All the Small Things' })
-        //     .then(function (response) {
-        //         console.log(JSON.stringify(response, null, 2));
-        //     })
-        //     .catch(function (err) {
-        //         console.log(err);
-        //     });
-        // }}
-
-
-// spotify.search({ type: 'track', query: 'All the Small Things' }, function (err, data) {
-//     if (err) {
-//         return console.log('Error occurred: ' + err);
-//     }
-
-//     console.log(data);
-// });}
