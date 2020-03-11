@@ -35,9 +35,6 @@ switch (searchMethod) {
 
     // --- omdb
     case 'movie-this':
-        omdbURL = 'http://www.omdbapi.com/?apikey=trilogy&t=' + userInput;
-        console.log('omdbURL: ' + omdbURL);
-
         getOmdb();
         break;
 
@@ -60,14 +57,13 @@ function getBandsInTown() {
                 var date = response.data[0].datetime;
                 var formattedDate = moment(date).format('MM/DD/YYYY');
 
-                console.log(`Venue Name: ${response.data[0].venue.name}`);
-                console.log(`Venue Location: ${response.data[0].venue.city}`);
-                console.log(`Venue Date: ${formattedDate}`);
+                // === Display data for user
+                console.log(`Venue Name: ${response.data[0].venue.name} || Venue Location: ${response.data[0].venue.city} || Venue Date: ${formattedDate}`);
             });
 }
 
 function getSpotify() {
-    if (!userInput) {         //  No userInput, default search "The Sign"
+    if (!userInput) {         //  No userInput, default search song: "The Sign"
         userInput = 'The Sign';
     }
     spotify.search({ type: 'track', query: userInput },
@@ -75,7 +71,18 @@ function getSpotify() {
             if (err) {
                 return console.log(`Error occurred: ${err}`);
             }
-            {console.log(`Artist: ${data.tracks.items[0].artists[0].name} || Song: ${data.tracks.items[0].name} || Album: ${data.tracks.items[0].album.name} || URL: ${data.tracks.items[0].external_urls.spotify}`);
+            {
+                // === Display data for user
+                console.log(`Artist: ${data.tracks.items[0].artists[0].name} || Song: ${data.tracks.items[0].name} || Album: ${data.tracks.items[0].album.name} || URL: ${data.tracks.items[0].external_urls.spotify}`);
             }
         });
+}
+
+function getOmdb() {
+    axios.get('http://www.omdbapi.com/?apikey=trilogy&t=' + userInput)
+        .then(
+            function (response) {
+                // === Display data for user
+                console.log(`Movie Title:  ${response.data.Title} || Year: ${response.data.Year} || IMDB Rating: ${response.data.imdbRating} || Rotten Tomatoes's Rating: ${response.data.Ratings[1].Value} || Country of Production : ${response.data.Country} || Language: ${response.data.Language} || Movie Plot Summary: ${response.data.Plot} || Main Cast: ${response.data.Actors}`)
+            });
 }
