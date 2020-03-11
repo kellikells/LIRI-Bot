@@ -14,10 +14,10 @@ var moment = require('moment');
 
 // =============== GRABBING CL ARGUMENTS ===============
 var searchMethod = process.argv[2];     // use this in switch statement
-var searchTerm = process.argv.slice(3).join('');  // - joins remaining arguments for search
+var userInput = process.argv.slice(3).join('');  // - joins remaining arguments for search
 
 console.log('HOW TO SEARCH: ' + searchMethod);
-console.log('SEARCH TERM(s): ' + searchTerm);
+console.log('SEARCH TERM(s): ' + userInput);
 
 // =============== SWITCH STATEMENT ===============
 
@@ -25,20 +25,17 @@ switch (searchMethod) {
 
     // --- bands in town
     case 'concert-this':
-
         getBandsInTown();
         break;
 
     // --- spotify
     case 'spotify-this-song':
-
         getSpotify();
         break;
 
-
     // --- omdb
     case 'movie-this':
-        omdbURL = 'http://www.omdbapi.com/?apikey=trilogy&t=' + searchTerm;
+        omdbURL = 'http://www.omdbapi.com/?apikey=trilogy&t=' + userInput;
         console.log('omdbURL: ' + omdbURL);
 
         getOmdb();
@@ -56,7 +53,7 @@ switch (searchMethod) {
 // ========== FUNCTIONS: switch statement cases ==========
 
 function getBandsInTown() {
-    axios.get('https://rest.bandsintown.com/artists/' + searchTerm + '/events?app_id=codingbootcamp')
+    axios.get('https://rest.bandsintown.com/artists/' + userInput + '/events?app_id=codingbootcamp')
         .then(
             function (response) {
 
@@ -64,8 +61,43 @@ function getBandsInTown() {
                 var date = response.data[0].datetime;
                 var formattedDate = moment(date).format('MM/DD/YYYY');
 
-                console.log('Venue Name: ' + response.data[0].venue.name);
-                console.log('Venue Location: ' + response.data[0].venue.city);
-                console.log('Venue Date: ' + formattedDate);
+                console.log(`Venue Name: ${response.data[0].venue.name}`);
+                console.log(`Venue Location: ${response.data[0].venue.city}`);
+                console.log(`Venue Date: ${formattedDate}`);
             });
 }
+
+function getSpotify() {
+
+    // default search to "The Sign" 
+    if (!userInput) {
+        spotify.search({ type: 'track', query: 'The Sign', limit: 5 }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+            console.log(JSON.stringify(data, null, 2));
+
+        });
+    }
+}
+
+
+
+        // spotify
+        //     .search({ type: 'track', query: 'All the Small Things' })
+        //     .then(function (response) {
+        //         console.log(JSON.stringify(response, null, 2));
+        //     })
+        //     .catch(function (err) {
+        //         console.log(err);
+        //     });
+        // }}
+
+
+// spotify.search({ type: 'track', query: 'All the Small Things' }, function (err, data) {
+//     if (err) {
+//         return console.log('Error occurred: ' + err);
+//     }
+
+//     console.log(data);
+// });}
