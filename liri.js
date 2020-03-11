@@ -16,9 +16,6 @@ var moment = require('moment');
 var searchMethod = process.argv[2];     // use this in switch statement
 var userInput = process.argv.slice(3).join('');  // - joins remaining arguments for search
 
-console.log('HOW TO SEARCH: ' + searchMethod);
-console.log('SEARCH TERM(s): ' + userInput);
-
 // =============== SWITCH STATEMENT ===============
 
 switch (searchMethod) {
@@ -41,12 +38,14 @@ switch (searchMethod) {
     // --- read random.txt
     case 'do-what-it-says':
         doWhatItSays();
+
         break;
 
-    default: console.log('invalid choice');
+    default: console.log(`invalid choice`);
 }
 
 // ========== FUNCTIONS: switch statement cases ==========
+// -------------------------------------------------------
 
 function getBandsInTown() {
     axios.get('https://rest.bandsintown.com/artists/' + userInput + '/events?app_id=codingbootcamp')
@@ -70,10 +69,10 @@ function getSpotify() {
         function (err, data) {
             if (err) {
                 return console.log(`Error occurred: ${err}`);
-            }
-            {
-                // === Display data for user
-                console.log(`Artist: ${data.tracks.items[0].artists[0].name} || Song: ${data.tracks.items[0].name} || Album: ${data.tracks.items[0].album.name} || URL: ${data.tracks.items[0].external_urls.spotify}`);
+                {
+                    // === Display data for user
+                    console.log(`Artist: ${data.tracks.items[0].artists[0].name} || Song: ${data.tracks.items[0].name} || Album: ${data.tracks.items[0].album.name} || URL: ${data.tracks.items[0].external_urls.spotify}`);
+                }
             }
         });
 }
@@ -86,3 +85,27 @@ function getOmdb() {
                 console.log(`Movie Title:  ${response.data.Title} || Year: ${response.data.Year} || IMDB Rating: ${response.data.imdbRating} || Rotten Tomatoes's Rating: ${response.data.Ratings[1].Value} || Country of Production : ${response.data.Country} || Language: ${response.data.Language} || Movie Plot Summary: ${response.data.Plot} || Main Cast: ${response.data.Actors}`)
             });
 }
+
+function doWhatItSays() {
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error);
+        } console.log(`This is the data from randomtxt: ${data}`);
+
+        // splits text by "," 
+        var dataArr = data.split(",");
+        searchMethod = dataArr[0];
+        userInput = dataArr[1];
+
+        // --- apply text to appropriate 
+        if (searchMethod === 'concert-this') {
+            getBandsInTown();
+        } else if (searchMethod === 'spotify-this-song') {
+            getSpotify();
+        } else if (searchMethod === 'movie-this') {
+            getOmdb();
+        } { console.log(`invalid choice`) }
+    });
+};
+
+
