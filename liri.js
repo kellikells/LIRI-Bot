@@ -69,11 +69,12 @@ function getSpotify() {
         function (err, data) {
             if (err) {
                 return console.log(`Error occurred: ${err}`);
-                {
-                    // === Display data for user
-                    console.log(`Artist: ${data.tracks.items[0].artists[0].name} || Song: ${data.tracks.items[0].name} || Album: ${data.tracks.items[0].album.name} || URL: ${data.tracks.items[0].external_urls.spotify}`);
-                }
             }
+            {
+                // === Display data for user
+                console.log(`Artist: ${data.tracks.items[0].artists[0].name} || Song: ${data.tracks.items[0].name} || Album: ${data.tracks.items[0].album.name} || URL: ${data.tracks.items[0].external_urls.spotify}`);
+            }
+
         });
 }
 
